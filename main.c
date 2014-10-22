@@ -3,7 +3,7 @@
 
 extern void init();
 extern void initNokia();
-extern void clearDisplay(unsigned char black);
+extern void clearDisplay(unsigned char y, unsigned char x, unsigned char black);
 extern void drawBlock(unsigned char row, unsigned char col, unsigned char black);
 
 #define		TRUE			1
@@ -19,18 +19,19 @@ extern void drawBlock(unsigned char row, unsigned char col, unsigned char black)
 void main(void) {
     WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
 
-    unsigned char	black, button_press;
+    unsigned char	black, notBlack, button_press;
 
 	// === Initialize system ================================================
 	IFG1=0; /* clear interrupt flag1 */
 	WDTCTL=WDTPW+WDTHOLD; /* stop WD */
 	button_press = FALSE;
 	black = TRUE;
+	notBlack = FALSE;
 
 
 	init();
 	initNokia();
-	clearDisplay(!black);
+	clearDisplay(0,0,notBlack);
 
     vector2d pos = {2,2};
     vector2d vel = {1,1};
@@ -45,7 +46,8 @@ void main(void) {
     	if(AUX_BUTTON ==0){
 			while(AUX_BUTTON == 0);
 			black = !black;
-			clearDisplay(!black);
+			notBlack = !black;
+			clearDisplay(0,0,notBlack);
 			drawBlock(myBall.position.y, myBall.position.x, black);
 		}
 
@@ -56,7 +58,7 @@ void main(void) {
 		}
 
     	moveBall(&myBall);
-    	clearDisplay(!black);
+    	clearDisplay(0,0,notBlack);
     	drawBlock(myBall.position.y, myBall.position.x, black);
     	_delay_cycles(5333333);
     }

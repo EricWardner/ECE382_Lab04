@@ -199,7 +199,7 @@ clearDisplay:
 
 	mov.w	#0x01, R12			; write a "clear" set of pixels
 	tst		R14
-	jz		drawBlack1
+	jnz		drawBlack1
 	mov.w	#0x00, R13			; to every byt on the display
 continue1:
 	mov.w	#0x360, R11			; loop counter
@@ -210,7 +210,7 @@ clearLoop:
 
 	mov.w	#0x00, R12			; set display address to 0,0
 	tst		R14
-	jz		drawBlack2
+	jnz		drawBlack2
 	mov.w	#0x00, R13
 continue2:
 	call	#setAddress
