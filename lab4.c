@@ -52,7 +52,7 @@ void main() {
 
 			if (button_press) {
 				button_press = FALSE;
-				clearDisplay();
+				//clearDisplay();
 				drawBlock(y,x);
 			}
 		}
