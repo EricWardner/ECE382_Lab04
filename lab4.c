@@ -3,7 +3,7 @@
 extern void init();
 extern void initNokia();
 extern void clearDisplay();
-extern void drawBlock(unsigned char row, unsigned char col);
+extern void drawBlock(unsigned char row, unsigned char col, unsigned char black);
 
 #define		TRUE			1
 #define		FALSE			0
@@ -16,19 +16,20 @@ extern void drawBlock(unsigned char row, unsigned char col);
 
 void main() {
 
-	unsigned char	x, y, button_press;
+	unsigned char	x, y, button_press, black;
 
 	// === Initialize system ================================================
 	IFG1=0; /* clear interrupt flag1 */
 	WDTCTL=WDTPW+WDTHOLD; /* stop WD */
 	button_press = FALSE;
+	black = TRUE;
 
 
 	init();
 	initNokia();
 	clearDisplay();
 	x=4;		y=4;
-	drawBlock(y,x);
+	drawBlock(y,x, black);
 
 	while(1) {
 
@@ -48,12 +49,16 @@ void main() {
 				while(RIGHT_BUTTON == 0);
 				if (x<=10) x=x+1;
 				button_press = TRUE;
+			} else if(AUX_BUTTON ==0){
+				while(AUX_BUTTON == 0);
+				black = !black;
+				drawBlock(y,x,black);
 			}
 
 			if (button_press) {
 				button_press = FALSE;
 				//clearDisplay();
-				drawBlock(y,x);
+				drawBlock(y,x,black);
 			}
 		}
 }
