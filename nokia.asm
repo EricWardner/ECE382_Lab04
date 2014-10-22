@@ -183,7 +183,7 @@ pollSPI:
 
 ;-------------------------------------------------------------------------------
 ;	Name:		clearDisplay
-;	Inputs:		none
+;	Inputs:		R14 - invert display, true false
 ;	Outputs:	none
 ;	Purpose:	Writes 0x360 blank 8-bit columns to the Nokia display
 ;-------------------------------------------------------------------------------
@@ -191,14 +191,17 @@ clearDisplay:
 	push	R11
 	push	R12
 	push	R13
+	push	R14
 
 	mov.w	#0x00, R12			; set display address to 0,0
 	mov.w	#0x00, R13
 	call	#setAddress
 
 	mov.w	#0x01, R12			; write a "clear" set of pixels
+	tst		R14
+	jz		drawBlack1
 	mov.w	#0x00, R13			; to every byt on the display
-
+continue1:
 	mov.w	#0x360, R11			; loop counter
 clearLoop:
 	call	#writeNokiaByte
@@ -206,14 +209,25 @@ clearLoop:
 	jnz		clearLoop
 
 	mov.w	#0x00, R12			; set display address to 0,0
+	tst		R14
+	jz		drawBlack2
 	mov.w	#0x00, R13
+continue2:
 	call	#setAddress
 
+	pop		R14
 	pop		R13
 	pop		R12
 	pop		R11
 
 	ret
+
+drawBlack1:
+	mov		#0xFF, R13
+	jmp		continue1
+drawBlack2:
+	mov		#0xFF, R13
+	jmp		continue2
 
 ;-------------------------------------------------------------------------------
 ;	Name:		setAddress
@@ -358,9 +372,9 @@ drawBlock:
 
 	mov		#1, R12
 	tst		R14
-	jnz		drawBlack
+	jnz		drawBlack3
 	mov		#0x00, R13
-continue:
+continue3:
 	mov.w	#0x08, R5			; loop all 8 pixel columns
 loopdB:
 	call	#writeNokiaByte		; draw the pixels
@@ -374,6 +388,6 @@ loopdB:
 
 	ret							; return whence you came
 
-drawBlack:
+drawBlack3:
 	mov		#0xFF, R13
-	jmp		continue
+	jmp		continue3
