@@ -31,7 +31,7 @@ void main(void) {
 	initNokia();
 	clearDisplay();
 
-    vector2d pos = {0,3};
+    vector2d pos = {2,2};
     vector2d vel = {1,1};
     unsigned char rad = 2;
 

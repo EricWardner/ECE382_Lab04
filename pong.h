@@ -8,8 +8,8 @@
 #ifndef PONG_H_
 #define PONG_H_
 
-#define SCREEN_WIDTH 8
-#define SCREEN_HEIGHT 10
+#define SCREEN_WIDTH 11
+#define SCREEN_HEIGHT 8
 
 typedef struct{
     int x;
