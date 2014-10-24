@@ -367,7 +367,19 @@ Debugging: I had to add in the delay function to make the moving block visible I
 
 ######A Functionality
 
+The objective for A functionalty was to create and implementation of the pong game. My plan was to draw a bar as a paddle and edit the pong.c file to only bounce off the paddle on the left side of the screen. This was fairly straight-forward and I only had trouble making the bar large enough. Here is the code that I changed and added to get the paddle working. When the moving ball moves past the paddle the game end is signified by clearing the screen. 
+
+The buttons also had to be re-implemented to control the paddle (only in up daown direction) so some of the code from the required functionality was added back in. 
+
+I also had to pass the position of the paddle into the pong code so the ball would know when to bounce off the paddle.
+
+I was able to partially complete A functionality, I could not get the paddle to change size!
+
 ######Bonus Functionality
+I was able to invert the colors by making a boolean color variable to be passed in which was similar to the paint brush toggle in the required functionality. The asm file had to be changed to allow for the new variable and jump accordingly. R14 was used for the new variable. 
+
+#######Lessons learned
+It is easy to go into coding with a plan and impelemnt the plan correctly but have your program not work becasue of little overlooked errors. I forgot to declare some global funcitons which took a while to figure out, I also didn't declare a new function properly at the beginning of a c file which was also hard. So advice to myself would be "learn C better"
 
 
-Documentation: 
+Documentation: Dr. Coulston showed me what a .global was. I used my old pong code.
