@@ -321,7 +321,7 @@ if (button_press) {
 
 Next, the more difficult part of the required functionality was utilizing the AUX button to change the color. This meant I had to change the asm file in addition to the C file, specifically the drawBlock function was changed to allow for the passing of a color true/false variable. In the asm drawBlock function R14 represented the "boolean" color variable and a jump was added to decide if 0xFF (black) or 0x00 (white) should be written as the color
 ```asm
-        tst		R14
+	tst		R14
 	jnz		drawBlack
 	mov		#0x00, R13
 continue:
@@ -334,7 +334,7 @@ drawBlack:
 	mov		#0xFF, R13
 	jmp		continue
 ```
-
+This completed the required functionality.
 ######B Functionality
 
 ######A Functionality
