@@ -1,4 +1,4 @@
 ECE382_Lab04
 ============
 
-Pong msp430
+![alt text](http://m.keygames.com/wp-content/uploads/2013/06/Pong-mobile-tablet-game.png)
