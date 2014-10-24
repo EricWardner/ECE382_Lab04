@@ -24,7 +24,7 @@ typedef struct{
 
 ball createBall(int xPos, int yPos, int xVel, int yVel, unsigned char radius);
 
-void moveBall(ball *ballToMove);
+void moveBall(ball *ballToMove, int padPos);
 
 
 

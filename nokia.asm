@@ -29,7 +29,7 @@ STE2007_DISPLAYON:				.equ	0xAF
 	.global initNokia
 	.global clearDisplay
 	.global drawBlock
-
+	.global drawPaddle
 
 ;-------------------------------------------------------------------------------
 ;	Name:		initNokia		68(rows)x92(columns)
@@ -391,3 +391,56 @@ loopdB:
 drawBlack3:
 	mov		#0xFF, R13
 	jmp		continue3
+;-------------------------------------------------------------------------------
+;	Name:		drawPaddle
+;	Inputs:		R12 row to draw block
+;				R13	column to draw block
+;				R14 white or black block
+;	Outputs:	none
+;	Purpose:	draw an 8x8 block of black pixels at screeen cordinates	8*row,8*col
+;				The display screen, for the purposes of this routine, is divided
+;				into 8x8 blocks.  Consequently the codinate system, for the purposes
+;				of this routine, start in the upper left of the screen @ (0,0) and
+;				end @ (11,7) in the lower right of the display.
+;	Registers:	R5	column counter to draw all 8 pixel columns
+;-------------------------------------------------------------------------------
+drawPaddle:
+	push	R5
+	push	R6
+	push	R12
+	push	R13
+	push 	R14
+
+	mov		R12, R5
+
+	rla.w	R13					; the column address needs multiplied
+	rla.w	R13					; by 8in order to convert it into a
+	rla.w	R13					; pixel address.
+	mov		R13, R6
+	call	#setAddress			; move cursor to upper left corner of block
+
+	mov		#1, R12
+	tst		R14
+	jnz		drawBlack4
+	mov		#0x00, R13
+continue4:
+	call	#writeNokiaByte		; draw the pixels
+	inc		R5
+	mov		R5,	R12
+	mov		R5, R13
+	call	#setAddress			; move cursor to upper left corner of block
+	mov		#1, R12
+	mov		#0xFF, R13
+	call	#writeNokiaByte		; draw the pixels
+	pop		R14
+	pop		R13
+	pop		R12
+	pop		R6
+	pop		R5
+
+
+	ret							; return whence you came
+
+drawBlack4:
+	mov		#0xFF, R13
+	jmp		continue4
