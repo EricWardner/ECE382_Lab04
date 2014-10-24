@@ -242,4 +242,101 @@ ECE382_Lab04
 
 <div id="feedly-mini" title="feedly Mini tookit"></div></body></html>
 
-##Lab
+##Lab Data
+
+####Objectives
+There were three main objectives and 3 possible bonus objectives in this lab.
+######Required Functionality
+
+Create an "Etch-a-Sketch" on the MSP430 where the directional buttons control which direction the "brush" moves and the AUX button controls the brush's color (black or white).
+<table class="table table-striped table-bordered">
+<thead>
+<tr>
+<th>Button</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SW5/Up</td>
+<td>Move the cursor up 1 block</td>
+</tr>
+<tr>
+<td>SW4/Down</td>
+<td>Move the cursor down 1 block</td>
+</tr>
+<tr>
+<td>SW2/Left</td>
+<td>Move the cursor left 1 block</td>
+</tr>
+<tr>
+<td>SW1/Right</td>
+<td>Move the cursor right 1 block</td>
+</tr>
+<tr>
+<td>SW3/Aux</td>
+<td>Toggle the color of the paint brush</td>
+</tr>
+</tbody>
+</table>
+
+This functionality was accomplished with a small change in the following given code. The given code causes a block to be drawn on the screen and allows it to be moved around with the directional buttons.
+
+```C
+while(1) {
+
+	if (UP_BUTTON == 0) {
+		while(UP_BUTTON == 0);
+		if (y>=1) y=y-1;
+		button_press = TRUE;
+	} else if (DOWN_BUTTON == 0) {
+		while(DOWN_BUTTON == 0);
+		if (y<=6) y=y+1;
+		button_press = TRUE;
+	} else if (LEFT_BUTTON == 0) {
+		while(LEFT_BUTTON == 0);
+		if (x>=1) x=x-1;
+		button_press = TRUE;
+	} else if (RIGHT_BUTTON == 0) {
+		while(RIGHT_BUTTON == 0);
+		if (x<=10) x=x+1;
+		button_press = TRUE;
+	}
+	if (button_press) {
+		button_press = FALSE;
+		clearDisplay();
+		drawBlock(y,x);
+	}
+}
+```
+The key difference between the given code and the required funcitonality is the fact the the block gets cleared and redrawn with each button press, also the AUX button press is never detected.
+First, to get the paint brush functionality, the clear display in the if(button_press) was simply removed. 
+```C
+if (button_press) {
+	button_press = FALSE;
+	//clearDisplay();
+	drawBlock(y,x);
+}
+```
+
+Next, the more difficult part of the required functionality was utilizing the AUX button to change the color. This meant I had to change the asm file in addition to the C file, specifically the drawBlock function was changed to allow for the passing of a color true/false variable. In the asm drawBlock function R14 represented the "boolean" color variable and a jump was added to decide if 0xFF (black) or 0x00 (white) should be written as the color
+```asm
+        tst		R14
+	jnz		drawBlack
+	mov		#0x00, R13
+continue:
+	mov.w	#0x08, R5			; loop all 8 pixel columns
+loopdB:
+	call	#writeNokiaByte	
+```
+```asm
+drawBlack:
+	mov		#0xFF, R13
+	jmp		continue
+```
+
+######B Functionality
+
+######A Functionality
+
+######Bonus Functionality
