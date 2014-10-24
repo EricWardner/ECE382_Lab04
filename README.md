@@ -4,7 +4,6 @@ ECE382_Lab04
 ![alt text](http://m.keygames.com/wp-content/uploads/2013/06/Pong-mobile-tablet-game.png)
 
 
-<!DOCTYPE html>
 <!-- saved from url=(0038)http://ece382.com/labs/lab4/index.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <link rel="stylesheet" type="text/css" href="./ECE382 - Lab 4 - C -  Etch-a-Sketch and Pong _files/bootstrap-combined.min.css">
@@ -238,7 +237,9 @@ ECE382_Lab04
 <br><br>So you can make symbol defined in one file and use it for/in others<br></p>
 
 
-        </div>
+
     
 
 <div id="feedly-mini" title="feedly Mini tookit"></div></body></html>
+
+##Lab
