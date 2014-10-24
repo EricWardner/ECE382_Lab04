@@ -335,8 +335,39 @@ drawBlack:
 	jmp		continue
 ```
 This completed the required functionality.
+
 ######B Functionality
+
+The objective for B functionality was to create a moving block that bounced around the screen. 
+
+I began this functionality with my pong code from a past assignment here is the meat of the code
+```C
+if(someBall->position.x >= SCREEN_WIDTH || someBall->position.x <= 0){
+	someBall->velocity.x = -1*someBall->velocity.x;
+}
+if(someBall->position.y >= SCREEN_HEIGHT || someBall->position.y <= 0){
+	someBall->velocity.y = -1*someBall->velocity.y;
+}
+
+someBall->position.x += someBall->velocity.x;
+someBall->position.y += someBall->velocity.y;
+```
+this program simply increments the ball's x and y position based on a given velocity and detects wall hits. 
+
+My plan was to use the old code and implement it with the nokia.asm file to bounce the block around. To accomplish this I copied all of the files from the old pong code and added a clearDisplay and drawBlock call in pong's main.c file. The code in main looked as follows
+```C
+while(1){
+    moveBall(&myBall);
+    clearDisplay();
+    drawBlock(myBall.position.y, myBall.position.x, black);
+    _delay_cycles(5333333);
+}
+```
+Debugging: I had to add in the delay function to make the moving block visible It also took a few tries to get the size of the screen exactly right. Luckily my pong code worked really well so there wasn't too much work involved in implementing th LCD screen. 
 
 ######A Functionality
 
 ######Bonus Functionality
+
+
+Documentation: 
